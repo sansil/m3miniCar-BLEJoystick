@@ -20,19 +20,23 @@ export default {
   },
   mounted() {},
   methods: {
-    searchBLE() {
-      console.log(navigator);
-      navigator.bluetooth
-        .requestDevice({
+    async searchBLE() {
+      try {
+        console.log("Requesting any Bluetooth Device...");
+        const device = await navigator.bluetooth.requestDevice({
+          // filters: [...] <- Prefer filters to save energy & show relevant devices.
           acceptAllDevices: true,
           optionalServices: [this.configServiceUuid]
-        })
-        .then(device => {
-          console.log(device);
-        })
-        .catch(error => {
-          console.log("Argh! " + error);
         });
+        console.log("Connecting to GATT Server...");
+        const server = await device.gatt.connect();
+
+        console.log("Getting Service...");
+        const service = await server.getPrimaryService(this.configServiceUuid);
+      } catch (error) {
+        document.querySelector("#writeButton").disabled = true;
+        console.log("Argh! " + error);
+      }
     }
   }
 };
