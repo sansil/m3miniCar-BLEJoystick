@@ -59,7 +59,7 @@ export default {
           this.velocidadCharString
         );
         this.servoChar = await service.getCharacteristic(
-          this.velocidadCharString
+          this.servoPositionCharString
         );
         // cargo estado inicial de movimiento
         var initServoPositionValue = Uint8Array.of(
@@ -83,6 +83,7 @@ export default {
         var newServoValue = Uint8Array.of(
           "0x" + Number(this.movimiento.servo).toString(8)
         );
+        console.log(newServoValue);
         if (this.connected) {
           await this.servoChar.writeValue(newServoValue);
           console.log("characteristic servo updated!");
@@ -135,9 +136,9 @@ export default {
         // Do something.
         console.log(data);
         if (data.direction.x == "left") {
-          this.movimiento.servo = 2;
+          this.movimiento.servo = 8;
         } else {
-          this.movimiento.servo = 1;
+          this.movimiento.servo = 2;
         }
         this.writeServoCharacteristic();
         console.log(data.direction);
@@ -146,7 +147,7 @@ export default {
 
       this.joystickR.on("end", async (evt, data) => {
         // Do something.
-        this.movimiento.servo = 0;
+        this.movimiento.servo = 4;
         console.log(data);
         console.log("termino");
         let result = 0;
