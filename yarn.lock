@@ -5434,10 +5434,10 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-nipplejs@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/nipplejs/-/nipplejs-0.8.1.tgz#c9564021de42a3820cc79522a64826c0800daef4"
-  integrity sha512-IdsyaLjfIz+9vEhW9PzxMPsO8wV5vBeSDPivedoQgln72WzuX8jB2405JRnQ6kTG4w3U5HBb9p1SZ5LZueHGLw==
+nipplejs@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/nipplejs/-/nipplejs-0.8.3.tgz#b1327bae21348b623135976a45e21cb090fd9e27"
+  integrity sha512-siHdHnxrCTf8Sa3aoQmNpIJNUmGngcG5enAxKMuwwmLTsEDFg3H1FMBGB0gWb+N27ji5CD+Rv+IXVVty09Gl0g==
 
 no-case@^2.2.0:
   version "2.3.2"

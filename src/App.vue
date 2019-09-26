@@ -4,9 +4,47 @@
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <router-view v-if="landscape" />
+    <div v-else>
+      <span>Por favor gire su telefono</span>
+      <img
+        src="https://raw.githubusercontent.com/NordicPlayground/nrf52-quadcopter/master/Web/img/rotate.png"
+      />
+    </div>
   </div>
 </template>
+
+
+
+<script>
+export default {
+  mounted() {
+    window.addEventListener("orientationchange", this.handleOrientation, true);
+    window.addEventListener("deviceorientation", this.initOrientation, true);
+  },
+  methods: {
+    handleOrientation() {
+      window.innerWidth > window.innerHeight
+        ? (this.landscape = false)
+        : (this.landscape = true);
+      console.log("change");
+    },
+    initOrientation() {
+      console.log("init");
+      window.innerWidth > window.innerHeight
+        ? (this.landscape = true)
+        : (this.landscape = false);
+    }
+  },
+  data() {
+    return {
+      landscape: true
+    };
+  }
+};
+</script>
+
+
 
 <style lang="scss">
 #app {
