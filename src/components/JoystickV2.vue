@@ -3,6 +3,20 @@
     <a class="button is-info" @click="searchBLE">BLE!</a>
     <a class="button is-danger" @click="disconnect">Desconnectar!</a>
     <div id="left"></div>
+    <div class="w-12" style>
+      <a @click="upVelocity" class="cursor-pointer">
+        <Zondicon icon="arrow-thick-up" class="fill-current text-blue-800 hover:text-blue-600" />
+      </a>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="username"
+        type="number"
+        placeholder="30"
+      />
+      <a @click="upVelocity" class="cursor-pointer">
+        <Zondicon icon="arrow-thick-down" class="fill-current text-blue-800 hover:text-blue-600" />
+      </a>
+    </div>
     <div id="right"></div>
   </div>
 </template>
@@ -10,8 +24,12 @@
 <script>
 import nipplejs from "nipplejs";
 require("../assets/sass/main.scss");
+import Zondicon from "vue-zondicons";
 
 export default {
+  components: {
+    Zondicon
+  },
   data() {
     return {
       options: "",
@@ -33,6 +51,9 @@ export default {
         servo: 0 // 0 = centro, 1 = derecha, 2 = izquierda
       }
     };
+  },
+  mounted() {
+    this.createJoystick();
   },
   methods: {
     disconnect() {

@@ -14,7 +14,9 @@
     "nipplejs": "^0.8.3",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
+    "vue-material-design-icons": "^4.1.0",
     "vue-router": "^3.0.3",
+    "vue-zondicons": "^0.1.10",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -27,6 +29,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
+    "tailwindcss": "^1.1.2",
     "vue-template-compiler": "^2.5.21"
   }
 }
