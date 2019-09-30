@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex-col h-screen flex justify-center bg-blue-900">
+  <div class="w-full flex-col h-screen flex justify-center">
     <div class>
       <a class="button is-info" @click="searchBLE" v-if="!connected">Buscar M30Car!</a>
       <a class="button is-danger" @click="disconnect" v-if="connected">Desconnectar!</a>
@@ -67,7 +67,7 @@ export default {
     };
   },
   mounted() {
-    // this.createJoystick();
+    //this.createJoystick();
   },
   methods: {
     upVelocity() {},
@@ -207,4 +207,4 @@ export default {
 };
 </script>
 <style scoped>
-</style>s
+</style>
