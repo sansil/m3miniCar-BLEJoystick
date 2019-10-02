@@ -4,9 +4,37 @@
       <a class="button is-info" @click="searchBLE" v-if="!connected">Buscar M30Car!</a>
       <a class="button is-danger" @click="disconnect" v-if="connected">Desconnectar!</a>
     </div>
-    <div class="flex justify-around items-center px-6 w-full self-center" v-if="connected">
+
+    <div class="flex justify-around items-center px-6 w-full self-center" v-if="!connected">
       <div id="left" class></div>
-      <div class="w-12" style>
+
+      <div class="flex w-full justify-center items-center -mt-64">
+        <div class="w-8 inline-block">
+          <a @click="rpm>20? rpm= rpm-5: rpm" class="cursor-pointer shadow-2xl">
+            <Zondicon
+              icon="arrow-thick-left"
+              class="fill-current text-gray-400 hover:text-red-400 shadow-2xl"
+            />
+          </a>
+        </div>
+
+        <span
+          v-for="index in 19"
+          :key="index"
+          :class="rpm/5 > index ? classRed(): classGray()"
+          style="margin: 0 0.15rem 0 0.15rem;"
+        ></span>
+
+        <div class="w-8 inline-block">
+          <a @click="rpm<100? rpm= rpm+5: rpm" class="cursor-pointer shadow-2xl">
+            <Zondicon
+              icon="arrow-thick-right"
+              class="fill-current text-gray-400 hover:text-red-400 shadow-2xl"
+            />
+          </a>
+        </div>
+      </div>
+      <!-- <div class="w-12" style>
         <a @click="rpm<100? rpm= rpm+5: rpm" class="cursor-pointer shadow-2xl">
           <Zondicon
             icon="arrow-thick-up"
@@ -23,7 +51,7 @@
         <a @click="rpm>20? rpm= rpm-5: rpm" class="cursor-pointer shadow-2xl">
           <Zondicon icon="arrow-thick-down" class="fill-current text-red-500 hover:text-red-400" />
         </a>
-      </div>
+      </div>-->
       <div id="right" class="shadow-2xl"></div>
     </div>
   </div>
@@ -67,9 +95,15 @@ export default {
     };
   },
   mounted() {
-    //this.createJoystick();
+    this.createJoystick();
   },
   methods: {
+    classGray() {
+      return "w-1 h-8 bg-gray-800 border-2 border-gray-500";
+    },
+    classRed() {
+      return "w-1 h-8 bg-red-700 border-2 border-red-500";
+    },
     upVelocity() {},
     disconnect() {
       this.BLEdevice.gatt.disconnect();
@@ -136,7 +170,7 @@ export default {
         zone: document.getElementById("left"),
         mode: "static",
         position: { left: "19%", top: "50%" },
-        color: "#ff6781",
+        color: "red",
         size: 170,
         lockY: true
       });
@@ -145,7 +179,7 @@ export default {
         zone: document.getElementById("right"),
         mode: "static",
         position: { right: "19%", top: "50%" },
-        color: "#ff6781",
+        color: "red",
         size: 170,
         lockX: true
       });

@@ -14,7 +14,9 @@ export default {
   name: "home",
   components: { Joystick },
   data() {
-    return {};
+    return {
+      connected: false
+    };
   },
   mounted() {},
   methods: {}

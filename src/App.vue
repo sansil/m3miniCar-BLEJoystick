@@ -1,8 +1,9 @@
 <template>
-  <div id="app" class>
-    <div class="background fixed my-bg w-full h-full"></div>
+  <div id="app">
+    <div class="fixed bg-blue-900 w-full h-full opacity-50" style="z-index:-1"></div>
+    <div class="background fixed my-bg w-full h-full" style="z-index:-10"></div>
     <router-view v-if="landscape" class="w-full h-full" />
-    <div v-else>
+    <div v-else class="z-10">
       <div class="flex flex-col justify-center items-center">
         <span class="my-20 text-xl text-white">Por favor gire su telefono</span>
         <img
@@ -64,7 +65,7 @@ export default {
 }
 
 .my-bg {
-  background-image: url("https://www.rutamotor.com/wp-content/uploads/2017/12/58-1000x567.jpg");
+  background-image: url("../src/assets/f1.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
