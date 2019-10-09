@@ -165,9 +165,9 @@ export default {
         console.log(data);
         var comando = "";
         if (data.direction.angle == "left") {
-          comando = "DIRECCION_CUSTOM/8";
+          comando = "DIRECCION_CUSTOM/19";
         } else {
-          comando = "DIRECCION_CUSTOM/6";
+          comando = "DIRECCION_CUSTOM/15";
         }
         this.writeRxCharacteristic(comando);
         console.log(data.direction);
@@ -178,7 +178,7 @@ export default {
         console.log("termino");
         let result = 0;
         while (!result) {
-          result = await this.writeRxCharacteristic("DIRECCION_CUSTOM/7");
+          result = await this.writeRxCharacteristic("DIRECCION_CUSTOM/17");
         }
       });
 
