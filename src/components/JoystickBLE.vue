@@ -1,58 +1,45 @@
 <template>
-  <div class="w-full flex-col h-screen flex justify-center">
+  <div class="flex-col flex justify-center h-full">
     <div class>
-      <a class="button is-info" @click="searchBLE" v-if="!connected">Buscar M30Car!</a>
-      <a class="button is-danger" @click="disconnect" v-if="connected">Desconnectar!</a>
+      <a class="button is-link font-medium" @click="searchBLE" v-if="!connected">
+        Buscar M3Car
+        <Zondicon icon="bluetooth" class="fill-current text-white w-6 ml-2" />
+      </a>
+      <a class="button is-danger is-outlined" @click="disconnect" v-if="connected">Desconnectar!</a>
     </div>
 
-    <div class="flex justify-around items-center px-6 w-full self-center" v-if="!connected">
+    <div class="flex justify-around items-center px-6 w-full self-center" v-if="connected">
       <div id="left" class></div>
+      <div class="w-full -mt-64">
+        <span class="text-gray-600 mb-1 inline-block uppercase font-semibold text-sm">potencia</span>
+        <div class="flex w-full justify-center items-center">
+          <div class="w-6 inline-block mr-3">
+            <a @click="rpm>20? rpm= rpm-5: rpm" class="cursor-pointer shadow-2xl">
+              <Zondicon
+                icon="arrow-thick-left"
+                class="fill-current text-red-600 border border-gray-700"
+              />
+            </a>
+          </div>
 
-      <div class="flex w-full justify-center items-center -mt-64">
-        <div class="w-8 inline-block">
-          <a @click="rpm>20? rpm= rpm-5: rpm" class="cursor-pointer shadow-2xl">
-            <Zondicon
-              icon="arrow-thick-left"
-              class="fill-current text-gray-400 hover:text-red-400 shadow-2xl"
-            />
-          </a>
-        </div>
+          <span
+            v-for="index in 19"
+            :key="index"
+            :class="rpm/5 > index ? classRed(): classGray()"
+            style="margin: 0 0.15rem 0 0.15rem;"
+          ></span>
 
-        <span
-          v-for="index in 19"
-          :key="index"
-          :class="rpm/5 > index ? classRed(): classGray()"
-          style="margin: 0 0.15rem 0 0.15rem;"
-        ></span>
-
-        <div class="w-8 inline-block">
-          <a @click="rpm<100? rpm= rpm+5: rpm" class="cursor-pointer shadow-2xl">
-            <Zondicon
-              icon="arrow-thick-right"
-              class="fill-current text-gray-400 hover:text-red-400 shadow-2xl"
-            />
-          </a>
+          <div class="w-6 inline-block ml-3">
+            <a @click="rpm<100? rpm= rpm+5: rpm" class="cursor-pointer shadow-2xl">
+              <Zondicon
+                icon="arrow-thick-right"
+                class="fill-current text-red-600 shadow-2xl border-gray-700 border"
+              />
+            </a>
+          </div>
         </div>
       </div>
-      <!-- <div class="w-12" style>
-        <a @click="rpm<100? rpm= rpm+5: rpm" class="cursor-pointer shadow-2xl">
-          <Zondicon
-            icon="arrow-thick-up"
-            class="fill-current text-red-500 hover:text-red-400 shadow-2xl"
-          />
-        </a>
-        <input
-          class="shadow-2xl appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="username"
-          type="number"
-          disabled="disabled"
-          :value="rpm"
-        />
-        <a @click="rpm>20? rpm= rpm-5: rpm" class="cursor-pointer shadow-2xl">
-          <Zondicon icon="arrow-thick-down" class="fill-current text-red-500 hover:text-red-400" />
-        </a>
-      </div>-->
-      <div id="right" class="shadow-2xl"></div>
+      <div id="right" class></div>
     </div>
   </div>
 </template>
@@ -60,9 +47,7 @@
 <script>
 import nipplejs from "nipplejs";
 require("../assets/sass/main.scss");
-const CENTER = 40; // 40 centro
-// const LEFT = 55;
-// const RIGHT = 30;
+
 import Zondicon from "vue-zondicons";
 
 export default {
@@ -75,36 +60,26 @@ export default {
       joystickR: null,
       joystickL: null,
       configServiceUuid: "6e400001-b5a3-f393-e0a9-e50e24dcca9e",
-      velocidadCharString: "0000bbef-1212-efde-1523-785fef13d123",
       RxCharString: "6e400002-b5a3-f393-e0a9-e50e24dcca9e",
-      servoPositionCharString: "0000bbed-1212-efde-1523-785fef13d123",
       RxChar: null,
       velocidadChar: null,
       servoChar: null,
       BLEdevice: null,
       connected: false,
       state_moviemiento: {},
-      rpm: 30,
-      movimiento: {
-        velocidad: {
-          rpm: 1,
-          sentido: 0
-        },
-        servo: CENTER // 0 = centro, 1 = derecha, 2 = izquierda
-      }
+      rpm: 30
     };
   },
   mounted() {
-    this.createJoystick();
+    //this.createJoystick();
   },
   methods: {
     classGray() {
-      return "w-1 h-8 bg-gray-800 border-2 border-gray-500";
+      return "w-1 h-8 bg-gray-800 border border-gray-500";
     },
     classRed() {
-      return "w-1 h-8 bg-red-700 border-2 border-red-500";
+      return "w-1 h-8 bg-red-600 border border-red-300";
     },
-    upVelocity() {},
     disconnect() {
       this.BLEdevice.gatt.disconnect();
       this.connected = false;
@@ -196,19 +171,15 @@ export default {
         }
         this.writeRxCharacteristic(comando);
         console.log(data.direction);
-        //console.log(evt);
       });
 
       this.joystickR.on("end", async (evt, data) => {
-        // Do something.
-        this.movimiento.servo = CENTER;
         console.log(data);
         console.log("termino");
         let result = 0;
         while (!result) {
           result = await this.writeRxCharacteristic("DIRECCION_CUSTOM/7");
         }
-        //console.log(evt);
       });
 
       this.joystickL.on("dir", (evt, data) => {
@@ -223,7 +194,6 @@ export default {
           comando = "SENTIDO_A/" + String(this.rpm);
         }
         this.writeRxCharacteristic(comando);
-        //console.log(evt);
       });
 
       this.joystickL.on("end", async (evt, data) => {
@@ -234,7 +204,6 @@ export default {
         while (!result) {
           result = await this.writeRxCharacteristic("SENTIDO_R/0");
         }
-        //console.log(evt);
       });
     }
   }

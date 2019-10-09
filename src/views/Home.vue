@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="h-screen w-full">
     <joystick></joystick>
   </div>
 </template>
@@ -8,10 +8,9 @@
 // @ is an alias to /src
 
 require("../assets/sass/main.scss");
-import Joystick from "../components/Joystick";
+import Joystick from "../components/JoystickBLE";
 
 export default {
-  name: "home",
   components: { Joystick },
   data() {
     return {
