@@ -70,9 +70,6 @@ export default {
       rpm: 30
     };
   },
-  mounted() {
-    //this.createJoystick();
-  },
   methods: {
     classGray() {
       return "w-1 h-8 bg-gray-800 border border-gray-500";
@@ -122,24 +119,6 @@ export default {
       }
     },
 
-    async writeServoCharacteristic() {
-      try {
-        var newServoValue = Uint8Array.of(
-          "0x" + Number(this.movimiento.servo).toString(8)
-        );
-        console.log(newServoValue);
-        if (this.connected) {
-          await this.servoChar.writeValue(newServoValue);
-          console.log("characteristic servo updated!");
-          return 1;
-        }
-        return 0;
-      } catch (error) {
-        console.log("Argh! " + error);
-        return 0;
-      }
-    },
-
     async createJoystick() {
       this.joystickL = nipplejs.create({
         zone: document.getElementById("left"),
@@ -158,7 +137,6 @@ export default {
         size: 170,
         lockX: true
       });
-      // console.log(joystickR);
 
       this.joystickR.on("dir", (evt, data) => {
         // Do something.
@@ -175,7 +153,7 @@ export default {
 
       this.joystickR.on("end", async (evt, data) => {
         console.log(data);
-        console.log("termino");
+        console.log("send end");
         let result = 0;
         while (!result) {
           result = await this.writeRxCharacteristic("DIRECCION_CUSTOM/17");
@@ -199,7 +177,7 @@ export default {
       this.joystickL.on("end", async (evt, data) => {
         // Do something.
         console.log(data);
-        console.log("termino");
+        console.log("send end");
         let result = 0;
         while (!result) {
           result = await this.writeRxCharacteristic("SENTIDO_R/0");
